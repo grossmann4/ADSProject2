@@ -47,8 +47,8 @@ def get_website(url):
     return text
 
 def main():
-    if len(sys.argv) < 9:
-        print('Required input format: python3 project2.py [-spanbert|-gpt3] <google api key> <google engine id> <openai secret key> <r> <t> <q> <k>')
+    if len(sys.argv) < 10:
+        print('Required input format: python3 project2.py [-spanbert|-gpt3] <google api key> <google engine id> <openai secret key> <r> <t> <q> <k>hi')
         return
 
     OPTION = sys.argv[1]
