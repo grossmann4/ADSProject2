@@ -79,8 +79,8 @@ def main():
     GOOGLE_ENGINE_ID = sys.argv[3]
     OPEN_AI_KEY = sys.argv[4]
     R = float(sys.argv[5])
-    if R < 1 or R > 4:
-        print('r has to be between 1 and 4')
+    if R not in [1, 2, 3, 4]:
+        print('r has to be an integer between 1 and 4')
         return 0
     T = float(sys.argv[6])
     if T < 0 or T > 1:
