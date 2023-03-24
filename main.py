@@ -41,9 +41,9 @@ def get_website(url):
     except urllib.error.HTTPError as e:
         return 0
     soup = bs4.BeautifulSoup(html, 'html.parser')
-    for script in soup(["script", "style"]):
-        script.extract()
-    text = soup.get_text()
+    # for script in soup(["script", "style"]):
+    #     script.extract()
+    # text = soup.get_text()
     return text
 
 def main():
@@ -92,6 +92,7 @@ def main():
             URLS.append(url)
             b = get_website(url)
             print(b)
+            break
 
     return 0
 
