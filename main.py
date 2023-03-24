@@ -8,6 +8,8 @@ from collections import defaultdict
 
 from googleapiclient.discovery import build
 
+MAX_ITEMS = 10
+
 def get_google_search_items(api_key, engine_id, words):
     service = build(
         "customsearch", "v1", developerKey=api_key
@@ -30,6 +32,19 @@ def get_formatted_items(items):
     def get_attr(item):
         return {'title': item['title'], 'url': item['link'], 'description': item['snippet']}
     return [get_attr(i) for i in items]
+
+def get_website(url):
+    # try to open the url
+    try:
+        r = urllib.request.urlopen(url)
+        html = r.read()
+    except urllib.error.HTTPError as e:
+        return 0
+    soup = bs4.BeautifulSoup(html, 'html.parser')
+    for script in soup(["script", "style"]):
+        script.extract()
+    text = soup.get_text()
+    return text
 
 def main():
     if len(sys.argv) < 9:
@@ -60,16 +75,24 @@ def main():
     
     # Initialize X, the set of extracted tuples, as the empty set.
     X = []
+    URLS = []
 
     # Query your Google Custom Search Engine to obtain the URLs for the top-10 webpages for query q
-    def run_query(words):
-        # Make search API call
-        items = get_google_search_items(GOOGLE_API_KEY, GOOGLE_ENGINE_ID, Q)
+    # Make search API call
+    items = get_google_search_items(GOOGLE_API_KEY, GOOGLE_ENGINE_ID, Q)
 
-        # Format items to desired output
-        output = get_formatted_items(items)
+    # Format items to desired output
+    output = get_formatted_items(items)
     
-    
+    for doc in output:
+        url = doc['url']
+        if url in URLS:
+            continue
+        else:
+            URLS.append(url)
+            b = get_website(url)
+            print(b)
+
     return 0
 
 if __name__ == "__main__":
