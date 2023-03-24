@@ -40,6 +40,7 @@ def get_website(url):
         html = r.read()
     except urllib.error.HTTPError as e:
         return 0
+    # extract text and clean up newline/spaces
     soup = bs4.BeautifulSoup(html, 'html.parser')
     for script in soup(["script", "style"]):
         script.extract()
@@ -47,6 +48,7 @@ def get_website(url):
     lines = (line.strip() for line in text.splitlines())
     chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
     text = '\n'.join(chunk for chunk in chunks if chunk)
+    # maybe look into taking off first few chars of text if its unneccessary
     return text
 
 def main():
@@ -78,6 +80,7 @@ def main():
     
     # Initialize X, the set of extracted tuples, as the empty set.
     X = []
+    # Initialize URLS so we can see if a url has already been opened
     URLS = []
 
     # Query your Google Custom Search Engine to obtain the URLs for the top-10 webpages for query q
@@ -87,17 +90,18 @@ def main():
     # Format items to desired output
     output = get_formatted_items(items)
     
+    # Get text from each url
     for doc in output:
         url = doc['url']
+        # If url already seen, continue
         if url in URLS:
             continue
         else:
+            # add url to URLS and get 10000 chars of text
             URLS.append(url)
             b = get_website(url)
             if len(b) > 10000:
                 b = b[:10000]
-            print(b)
-            break
 
     return 0
 
