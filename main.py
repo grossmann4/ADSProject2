@@ -58,7 +58,7 @@ def extract(text):
     # Split plaintext into sentences
     doc = nlp(text)
     for sent in doc.sents:
-        print(type(sent))
+        print(type(sent.text))
         # entity = nlp(sent)
         # for ent in doc.ents:
         #     print(ent.text, ent.start_char, ent.end_char, ent.label_)
