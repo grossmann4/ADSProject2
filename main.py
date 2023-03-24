@@ -53,7 +53,7 @@ def get_website(url):
     return text
 
 def extract(text):
-    nlp = spacy.load("en_core_web_sm")
+    nlp = spacy.load("en_core_web_lg")
     doc = nlp(text)
     for sent in doc.sents:
         print(sent)
