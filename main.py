@@ -44,7 +44,7 @@ def get_website(url):
     # for script in soup(["script", "style"]):
     #     script.extract()
     # text = soup.get_text()
-    return text
+    return soup
 
 def main():
     if len(sys.argv) < 9:
