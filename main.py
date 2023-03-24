@@ -91,7 +91,9 @@ def main():
         else:
             URLS.append(url)
             b = get_website(url)
-            print(len(b))
+            if len(b) > 10000:
+                b = b[:10000]
+            print(b)
             break
 
     return 0
