@@ -43,8 +43,8 @@ def get_website(url):
     soup = bs4.BeautifulSoup(html, 'html.parser')
     for script in soup(["script", "style"]):
         script.extract()
-    # text = soup.get_text()
-    return soup
+    text = soup.get_text()
+    return text
 
 def main():
     if len(sys.argv) < 9:
