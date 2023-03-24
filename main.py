@@ -52,8 +52,7 @@ def main():
         return
 
     OPTION = sys.argv[1]
-    print(OPTION)
-    if OPTION != '-spanbert' or OPTION != '-gpt3':
+    if OPTION != '-spanbert' and OPTION != '-gpt3':
         print('Required input format: python3 project2.py [-spanbert|-gpt3] <google api key> <google engine id> <openai secret key> <r> <t> <q> <k>')
         return 0
     
