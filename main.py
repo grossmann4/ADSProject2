@@ -53,17 +53,21 @@ def get_website(url):
     return text
 
 def extract(text):
+    sentences = []
+    relations = []
     # Initialize spacy
     nlp = spacy.load("en_core_web_lg")
     # Split plaintext into sentences
     doc = nlp(text)
     for sent in doc.sents:
+        sentences.append(sent.text)
         # print(type(sent.text))
         # Extract entities
         entity = nlp(sent.text)
         for ent in entity.ents:
+            relations.append([ent.text, ent.label_])
             print(ent.text, ent.start_char, ent.end_char, ent.label_)
-    return 0
+    return sentences, relations
 
 def main():
     if len(sys.argv) < 9:
@@ -120,8 +124,8 @@ def main():
             if len(plaintext) > 10000:
                 plaintext = plaintext[:10000]
             # split text into sentences and extract entities
-            named_entities = extract(plaintext)
-            break
+            sentences, named_entities = extract(plaintext)
+            # break
     return 0
 
 if __name__ == "__main__":
