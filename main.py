@@ -5,6 +5,7 @@ import urllib.request
 import bs4
 import sys
 from collections import defaultdict
+import spacy
 
 from googleapiclient.discovery import build
 
@@ -51,6 +52,13 @@ def get_website(url):
     # maybe look into taking off first few chars of text if its unneccessary
     return text
 
+def extract(text):
+    nlp = spacy.load("en_core_web_sm")
+    doc = nlp(text)
+    for sent in doc.sents:
+        print(sent)
+    return 0
+
 def main():
     if len(sys.argv) < 9:
         print('Required input format: python3 project2.py [-spanbert|-gpt3] <google api key> <google engine id> <openai secret key> <r> <t> <q> <k>hi')
@@ -83,6 +91,7 @@ def main():
     # Initialize URLS so we can see if a url has already been opened
     URLS = []
 
+    # TODO: make sure this part goes in a loop
     # Query your Google Custom Search Engine to obtain the URLs for the top-10 webpages for query q
     # Make search API call
     items = get_google_search_items(GOOGLE_API_KEY, GOOGLE_ENGINE_ID, Q)
@@ -99,10 +108,11 @@ def main():
         else:
             # add url to URLS and get 10000 chars of text
             URLS.append(url)
-            b = get_website(url)
-            if len(b) > 10000:
-                b = b[:10000]
-
+            plaintext = get_website(url)
+            if len(plaintext) > 10000:
+                plaintext = plaintext[:10000]
+            # split text into sentences and extract entities
+            named_entities = extract(plaintext)
     return 0
 
 if __name__ == "__main__":
