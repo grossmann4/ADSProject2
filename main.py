@@ -87,7 +87,7 @@ def main():
         print('t has to be between 0 and 1')
         return 0
     Q = sys.argv[7].split()
-    K = float(sys.argv[8])
+    K = int(sys.argv[8])
     if K < 0:
         print('k has to be greater than 0')
         return 0
