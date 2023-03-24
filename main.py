@@ -58,12 +58,18 @@ def main():
         print('k has to be greater than 0')
         return 0
     
+    # Initialize X, the set of extracted tuples, as the empty set.
+    X = []
+
+    # Query your Google Custom Search Engine to obtain the URLs for the top-10 webpages for query q
     def run_query(words):
         # Make search API call
         items = get_google_search_items(GOOGLE_API_KEY, GOOGLE_ENGINE_ID, Q)
 
         # Format items to desired output
         output = get_formatted_items(items)
+    
+    
     return 0
 
 if __name__ == "__main__":
