@@ -53,10 +53,15 @@ def get_website(url):
     return text
 
 def extract(text):
+    # Initialize spacy
     nlp = spacy.load("en_core_web_lg")
+    # Split plaintext into sentences
     doc = nlp(text)
     for sent in doc.sents:
-        print(sent)
+        # print(sent)
+        entity = nlp(sent)
+        for ent in doc.ents:
+            print(ent.text, ent.start_char, ent.end_char, ent.label_)
     return 0
 
 def main():
@@ -109,6 +114,8 @@ def main():
             # add url to URLS and get 10000 chars of text
             URLS.append(url)
             plaintext = get_website(url)
+            if plaintext == 0:
+                continue
             if len(plaintext) > 10000:
                 plaintext = plaintext[:10000]
             # split text into sentences and extract entities
