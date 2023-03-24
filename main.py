@@ -91,7 +91,7 @@ def main():
         else:
             URLS.append(url)
             b = get_website(url)
-            print(b)
+            print(len(b))
             break
 
     return 0
