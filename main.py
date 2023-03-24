@@ -59,16 +59,16 @@ def main():
     GOOGLE_API_KEY = sys.argv[2]
     GOOGLE_ENGINE_ID = sys.argv[3]
     OPEN_AI_KEY = sys.argv[4]
-    R = sys.argv[5]
+    R = float(sys.argv[5])
     if R < 1 or R > 4:
         print('r has to be between 1 and 4')
         return 0
-    T = sys.argv[6]
+    T = float(sys.argv[6])
     if T < 0 or T > 1:
         print('t has to be between 0 and 1')
         return 0
     Q = sys.argv[7].split()
-    K = sys.argv[8]
+    K = float(sys.argv[8])
     if K < 0:
         print('k has to be greater than 0')
         return 0
