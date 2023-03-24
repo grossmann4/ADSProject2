@@ -113,6 +113,7 @@ def main():
                 plaintext = plaintext[:10000]
             # split text into sentences and extract entities
             named_entities = extract(plaintext)
+            break
     return 0
 
 if __name__ == "__main__":
