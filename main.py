@@ -6,7 +6,7 @@ import bs4
 import sys
 from collections import defaultdict
 import spacy
-import spanbert
+import spanbert as span
 import spacy_help_functions as sp
 from googleapiclient.discovery import build
 
@@ -59,7 +59,7 @@ def extract(text, R, T):
     nlp = spacy.load("en_core_web_lg")
     # Split plaintext into sentences and extract relations
     doc = nlp(text)
-    span = spanbert.SpanBERT("./pretrained_spanbert")
+    spanbert = span.SpanBERT("./pretrained_spanbert")
     if R in [1, 2, 4]:
         entities_of_interest = ["PERSON", "ORGANIZATION"]
     else:
