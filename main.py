@@ -83,19 +83,19 @@ def extract(text, R, T):
         examples = []
         for ep in ents:
             if R in [1, 2]:
-                if ep[1] == 'PERSON' and ep[2] == 'ORGANIZATION':
+                if ep[1][1] == 'PERSON' and ep[2][1] == 'ORGANIZATION':
                     examples.append({"tokens": ep[0], "subj": ep[1], "obj": ep[2]})
-                elif ep[2] == 'PERSON' and ep[1] == 'ORGANIZATION':
+                elif ep[2][1] == 'PERSON' and ep[1][1] == 'ORGANIZATION':
                     examples.append({"tokens": ep[0], "subj": ep[2], "obj": ep[1]})
             elif R == 3:
-                if ep[1] == 'PERSON' and ep[2] in ["Location", "CITY", "STATE_OR_PROVINCE", "COUNTRY"]:
+                if ep[1][1] == 'PERSON' and ep[2][1] in ["Location", "CITY", "STATE_OR_PROVINCE", "COUNTRY"]:
                     examples.append({"tokens": ep[0], "subj": ep[1], "obj": ep[2]})
-                elif ep[2] == 'PERSON' and ep[1] in ["Location", "CITY", "STATE_OR_PROVINCE", "COUNTRY"]:
+                elif ep[2][1] == 'PERSON' and ep[1][1] in ["Location", "CITY", "STATE_OR_PROVINCE", "COUNTRY"]:
                     examples.append({"tokens": ep[0], "subj": ep[2], "obj": ep[1]})
             else:
-                if ep[1] == 'ORGANIZATION' and ep[2] == 'PERSON':
+                if ep[1][1] == 'ORGANIZATION' and ep[2][1] == 'PERSON':
                     examples.append({"tokens": ep[0], "subj": ep[1], "obj": ep[2]})
-                elif ep[2] == 'ORGANIZATION' and ep[1] == 'PERSON':
+                elif ep[2][1] == 'ORGANIZATION' and ep[1][1] == 'PERSON':
                     examples.append({"tokens": ep[0], "subj": ep[2], "obj": ep[1]})
         print("EXAMPLES: {}".format(examples))
         # run spanbert if there are relevant entity pairs
