@@ -68,7 +68,7 @@ def extract(text):
         entity = nlp(sent.text)
         for ent in entity.ents:
             relations.append([ent.text, ent.label_])
-            # print(ent.text, ent.start_char, ent.end_char, ent.label_)
+            print(ent.text, ent.start_char, ent.end_char, ent.label_)
     return sentences, relations
 
 def main():
