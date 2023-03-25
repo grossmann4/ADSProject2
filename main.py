@@ -11,6 +11,7 @@ import spacy_help_functions as sp
 from googleapiclient.discovery import build
 
 MAX_ITEMS = 10
+ENTS = ['ORG', 'PERSON', 'LOC', 'GPE', 'DATE']
 
 def get_google_search_items(api_key, engine_id, words):
     service = build(
@@ -61,20 +62,8 @@ def extract(text):
     # Split plaintext into sentences
     doc = nlp(text)
     for sent in doc.sents:
-        print(sent.ents)
-        # # print(sent)
-        # sentences.append(sent.text)
-        # print('\n')
-        # print(sent.text)
-        # # Extract entities
-        # entity = nlp(sent.text)
-        # for ent in entity.ents:
-
-
-
-
-        #     relations.append([ent.text, ent.label_])
-        #     print(ent.text, ent.start_char, ent.end_char, ent.label_)
+        # print(sent.ents)
+        print(sp.get_entities(sent, ENTS))
     return sentences, relations
 
 def main():
