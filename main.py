@@ -55,28 +55,76 @@ def get_website(url):
     return text
 
 def extract(text, R, T):
+    res = defaultdict(int)
+    # Set entities of interest
     if R in [1, 2, 4]:
         entities_of_interest = ["PERSON", "ORGANIZATION"]
     else:
         entities_of_interest = ["PERSON", "Location", "CITY", "STATE_OR_PROVINCE", "COUNTRY"]
+
     # Initialize spacy
     nlp = spacy.load("en_core_web_lg")
+    # Load spanbert model
+    spanbert_model = span.SpanBERT("./pretrained_spanbert")
+
     # Split plaintext into sentences and extract relations
     # doc = nlp(text)
     doc = nlp("Bill Gates stepped down as chairman of Microsoft in February 2014 and assumed a new post as technology adviser to support the newly appointed CEO Satya Nadella.")
+
     for sent in doc.sents:
+        # create entity pairs for each sentence
         ents = sp.create_entity_pairs(sent, entities_of_interest)
+        # if there are no named entities, go to next sentence
+        if not ents:
+            continue
+        
+        # format the entity pairs and only add the desired entity pairs
         examples = []
         for ep in ents:
-            examples.append({"tokens": ep[0], "subj": ep[1], "obj": ep[2]})
-            examples.append({"tokens": ep[0], "subj": ep[2], "obj": ep[1]})
-        for i in examples:
-            print(i['subj'])
-            print(i['obj'])
-            print('\n')
-    # relations = sp.extract_relations(doc, spanbert, entities_of_interest=entities_of_interest, conf=T)
-    # print("Relations: {}".format(dict(relations)))
-    return 0
+            if R in [1, 2]:
+                if ep[1] == 'PERSON' and ep[2] == 'ORGANIZATION':
+                    examples.append({"tokens": ep[0], "subj": ep[1], "obj": ep[2]})
+                elif ep[2] == 'PERSON' and ep[1] == 'ORGANIZATION':
+                    examples.append({"tokens": ep[0], "subj": ep[2], "obj": ep[1]})
+            elif R == 3:
+                if ep[1] == 'PERSON' and ep[2] in ["Location", "CITY", "STATE_OR_PROVINCE", "COUNTRY"]:
+                    examples.append({"tokens": ep[0], "subj": ep[1], "obj": ep[2]})
+                elif ep[2] == 'PERSON' and ep[1] in ["Location", "CITY", "STATE_OR_PROVINCE", "COUNTRY"]:
+                    examples.append({"tokens": ep[0], "subj": ep[2], "obj": ep[1]})
+            else:
+                if ep[1] == 'ORGANIZATION' and ep[2] == 'PERSON':
+                    examples.append({"tokens": ep[0], "subj": ep[1], "obj": ep[2]})
+                elif ep[2] == 'ORGANIZATION' and ep[1] == 'PERSON':
+                    examples.append({"tokens": ep[0], "subj": ep[2], "obj": ep[1]})
+        
+        # run spanbert if there are relevant entity pairs
+        if examples:
+            preds = spanbert_model.predict(examples)
+        # otherwise go to next sentence
+        else:
+            continue
+
+        for ex, pred in list(zip(examples, preds)):
+            relation = pred[0]
+            if relation == 'no_relation':
+                continue
+            print("\n\t\t=== Extracted Relation ===")
+            print("\t\tTokens: {}".format(ex['tokens']))
+            subj = ex["subj"][0]
+            obj = ex["obj"][0]
+            confidence = pred[1]
+            print("\t\tRelation: {} (Confidence: {:.3f})\nSubject: {}\tObject: {}".format(relation, confidence, subj, obj))
+            if confidence > T:
+                if res[(subj, relation, obj)] < confidence:
+                    res[(subj, relation, obj)] = confidence
+                    print("\t\tAdding to set of extracted relations")
+                else:
+                    print("\t\tDuplicate with lower confidence than existing record. Ignoring this.")
+            else:
+                print("\t\tConfidence is lower than threshold confidence. Ignoring this.")
+            print("\t\t==========")
+
+    return res
 
 def main():
     if len(sys.argv) < 9:
