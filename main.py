@@ -65,7 +65,7 @@ def extract(text, R, T):
     # doc = nlp(text)
     doc = nlp("Bill Gates stepped down as chairman of Microsoft in February 2014 and assumed a new post as technology adviser to support the newly appointed CEO Satya Nadella.")
     for sent in doc.sents:
-        ents = sp.get_entities(sent, entities_of_interest)
+        ents = sp.create_entity_pairs(sent, entities_of_interest)
         print(ents)
     # relations = sp.extract_relations(doc, spanbert, entities_of_interest=entities_of_interest, conf=T)
     # print("Relations: {}".format(dict(relations)))
