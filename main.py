@@ -6,7 +6,8 @@ import bs4
 import sys
 from collections import defaultdict
 import spacy
-
+from spanbert import SpanBERT
+from spacy_help_functions import extract_relations
 from googleapiclient.discovery import build
 
 MAX_ITEMS = 10
@@ -59,14 +60,15 @@ def extract(text):
     nlp = spacy.load("en_core_web_lg")
     # Split plaintext into sentences
     doc = nlp(text)
-    for sent in doc.sents:
-        sentences.append(sent.text)
-        # print(type(sent.text))
-        # Extract entities
-        entity = nlp(sent.text)
-        for ent in entity.ents:
-            relations.append([ent.text, ent.label_])
-            # print(ent.text, ent.start_char, ent.end_char, ent.label_)
+    for sent in doc:
+        print(sent)
+        # sentences.append(sent.text)
+        # print(sent.text)
+        # # Extract entities
+        # entity = nlp(sent.text)
+        # for ent in entity.ents:
+        #     relations.append([ent.text, ent.label_])
+        #     # print(ent.text, ent.start_char, ent.end_char, ent.label_)
     return sentences, relations
 
 def main():
@@ -125,7 +127,7 @@ def main():
                 plaintext = plaintext[:10000]
             # split text into sentences and extract entities
             sentences, named_entities = extract(plaintext)
-            # break
+            break
     return 0
 
 if __name__ == "__main__":
