@@ -146,6 +146,12 @@ def extract(text, R, T, OPTION, spanbert_model, nlp):
 
     return res
 
+# TODO
+def print_res(relations):
+    for r in relations:
+        print("Confidence: {x}\t| Subject: {y}\t| Object: {z}".format(x=r[1],y=r[0][0],z=r[0][2]))
+    return 0
+
 def main():
     if len(sys.argv) < 9:
         print('Required input format: python3 project2.py [-spanbert|-gpt3] <google api key> <google engine id> <openai secret key> <r> <t> <q> <k>hi')
@@ -217,10 +223,13 @@ def main():
                 plaintext = plaintext[:10000]
             # split text into sentences and extract entities
             relations = extract(plaintext, R, T, OPTION, spanbert_model, nlp)
-            res.update(relations)
-            # print('3')
-    print(res)
             
+            res.update(relations)
+            
+    #print(res)
+
+    print_res(res)
+
     return 0
 
 if __name__ == "__main__":
