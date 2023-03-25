@@ -209,7 +209,9 @@ def main():
         else:
             # add url to URLS and get 10000 chars of text
             URLS.append(url)
+            print('1')
             plaintext = get_website(url)
+            print('2')
             # if url cannot be opened, go to next one
             if plaintext == 0:
                 continue
@@ -217,6 +219,7 @@ def main():
                 plaintext = plaintext[:10000]
             # split text into sentences and extract entities
             relations = extract(plaintext, R, T, OPTION, spanbert_model)
+            print('3')
             print(relations)
             
     return 0
