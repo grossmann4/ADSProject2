@@ -61,14 +61,14 @@ def extract(text):
     # Split plaintext into sentences
     doc = nlp(text)
     for sent in doc.sents:
-        print(sent)
-        # sentences.append(sent.text)
-        # print(sent.text)
-        # # Extract entities
-        # entity = nlp(sent.text)
-        # for ent in entity.ents:
-        #     relations.append([ent.text, ent.label_])
-        #     # print(ent.text, ent.start_char, ent.end_char, ent.label_)
+        # print(sent)
+        sentences.append(sent.text)
+        print(sent.text)
+        # Extract entities
+        entity = nlp(sent.text)
+        for ent in entity.ents:
+            relations.append([ent.text, ent.label_])
+            # print(ent.text, ent.start_char, ent.end_char, ent.label_)
     return sentences, relations
 
 def main():
