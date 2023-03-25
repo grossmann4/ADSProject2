@@ -6,7 +6,8 @@ import bs4
 import sys
 from collections import defaultdict
 import spacy
-from spanbert import SpanBERT
+from SpanBERT import spanbert
+from SpanBERT import spacy_help_functions as sp
 from spacy_help_functions import extract_relations
 from googleapiclient.discovery import build
 
