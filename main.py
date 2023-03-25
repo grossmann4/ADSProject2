@@ -93,11 +93,7 @@ def run_gpt3(sentence):
     return 0
 
 # extract the relations for a webpage via spanbert
-def extract(text, R, T, OPTION):
-
-    if OPTION == '-spanbert':
-        # Load spanbert model
-        spanbert_model = span.SpanBERT("./pretrained_spanbert")
+def extract(text, R, T, OPTION, spanbert_model):
     res = defaultdict(int)
     # Set entities of interest
     if R in [1, 2, 4]:
@@ -198,6 +194,12 @@ def main():
     # Format items to desired output
     output = get_formatted_items(items)
     
+    if OPTION == '-spanbert':
+        # Load spanbert model
+        spanbert_model = span.SpanBERT("./pretrained_spanbert")
+    else:
+        spanbert_model = 0
+
     # Get text from each url
     for doc in output:
         url = doc['url']
@@ -214,7 +216,7 @@ def main():
             if len(plaintext) > 10000:
                 plaintext = plaintext[:10000]
             # split text into sentences and extract entities
-            relations = extract(plaintext, R, T, OPTION)
+            relations = extract(plaintext, R, T, OPTION, spanbert_model)
             print(relations)
             
     return 0
