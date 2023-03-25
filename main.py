@@ -100,6 +100,8 @@ def extract(text, R, T):
         # run spanbert if there are relevant entity pairs
         if examples:
             preds = spanbert_model.predict(examples)
+            print('here')
+            print(examples)
         # otherwise go to next sentence
         else:
             continue
