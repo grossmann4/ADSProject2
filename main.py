@@ -74,7 +74,7 @@ def extract(text, R, T):
     for sent in doc.sents:
         # create entity pairs for each sentence
         ents = sp.create_entity_pairs(sent, entities_of_interest)
-        print("ENTS: {}".format(ents))
+        # print("ENTS: {}".format(ents))
         # if there are no named entities, go to next sentence
         if not ents:
             continue
@@ -97,7 +97,7 @@ def extract(text, R, T):
                     examples.append({"tokens": ep[0], "subj": ep[1], "obj": ep[2]})
                 elif ep[2][1] == 'ORGANIZATION' and ep[1][1] == 'PERSON':
                     examples.append({"tokens": ep[0], "subj": ep[2], "obj": ep[1]})
-        print("EXAMPLES: {}".format(examples))
+        # print("EXAMPLES: {}".format(examples))
         # run spanbert if there are relevant entity pairs
         if examples:
             preds = spanbert_model.predict(examples)
@@ -107,6 +107,8 @@ def extract(text, R, T):
         else:
             continue
 
+        # taken from spacy_help_functions
+        # retrieves spanbert entity pairs
         for ex, pred in list(zip(examples, preds)):
             relation = pred[0]
             if relation == 'no_relation':
@@ -185,6 +187,7 @@ def main():
                 plaintext = plaintext[:10000]
             # split text into sentences and extract entities
             relations = extract(plaintext, R, T)
+            print(relations)
             break
     return 0
 
