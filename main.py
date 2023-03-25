@@ -6,8 +6,8 @@ import bs4
 import sys
 from collections import defaultdict
 import spacy
-from SpanBERT import spanbert
-from SpanBERT import spacy_help_functions as sp
+import spanbert
+import spacy_help_functions as sp
 from googleapiclient.discovery import build
 
 MAX_ITEMS = 10
