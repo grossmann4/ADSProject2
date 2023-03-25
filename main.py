@@ -93,27 +93,23 @@ def run_gpt3(sentence):
     return 0
 
 # extract the relations for a webpage via spanbert
-def extract(text, R, T, OPTION, spanbert_model):
+def extract(text, R, T, OPTION, spanbert_model, nlp):
     res = defaultdict(int)
     # Set entities of interest
     if R in [1, 2, 4]:
         entities_of_interest = ["PERSON", "ORGANIZATION"]
     else:
         entities_of_interest = ["PERSON", "Location", "CITY", "STATE_OR_PROVINCE", "COUNTRY"]
-    print('1')
-    # Initialize spacy
-    nlp = spacy.load("en_core_web_lg")
     
     # Split plaintext into sentences and extract relations
     doc = nlp(text)
 
     # doc = nlp("Bill Gates stepped down as chairman of Microsoft in February 2014 and assumed a new post as technology adviser to support the newly appointed CEO Satya Nadella.")
-    print('2')
     for sent in doc.sents:
         # create entity pairs for each sentence
         ents = sp.create_entity_pairs(sent, entities_of_interest)
         # print("ENTS: {}".format(ents))
-        print('3')
+
         # if there are no named entities, go to next sentence
         if not ents:
             continue
@@ -136,7 +132,7 @@ def extract(text, R, T, OPTION, spanbert_model):
                     examples.append({"tokens": ep[0], "subj": ep[1], "obj": ep[2]})
                 elif ep[2][1] == 'ORGANIZATION' and ep[1][1] == 'PERSON':
                     examples.append({"tokens": ep[0], "subj": ep[2], "obj": ep[1]})
-        print('4')
+
         # print("EXAMPLES: {}".format(examples))
 
         # if there are examples, find relations
@@ -152,7 +148,7 @@ def extract(text, R, T, OPTION, spanbert_model):
         # otherwise go to next sentence
         else:
             continue
-        print('5')
+        
     return res
 
 def main():
@@ -195,6 +191,9 @@ def main():
     # Format items to desired output
     output = get_formatted_items(items)
     
+    # Initialize spacy
+    nlp = spacy.load("en_core_web_lg")
+
     if OPTION == '-spanbert':
         # Load spanbert model
         spanbert_model = span.SpanBERT("./pretrained_spanbert")
@@ -220,7 +219,7 @@ def main():
             if len(plaintext) > 10000:
                 plaintext = plaintext[:10000]
             # split text into sentences and extract entities
-            relations = extract(plaintext, R, T, OPTION, spanbert_model)
+            relations = extract(plaintext, R, T, OPTION, spanbert_model, nlp)
             # print('3')
             print(relations)
             
