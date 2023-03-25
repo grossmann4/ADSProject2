@@ -71,7 +71,9 @@ def extract(text, R, T):
             examples.append({"tokens": ep[0], "subj": ep[1], "obj": ep[2]})
             examples.append({"tokens": ep[0], "subj": ep[2], "obj": ep[1]})
         for i in examples:
-            print(i)
+            print(i['subj'])
+            print(i['obj'])
+            print('\n')
     # relations = sp.extract_relations(doc, spanbert, entities_of_interest=entities_of_interest, conf=T)
     # print("Relations: {}".format(dict(relations)))
     return 0
