@@ -210,6 +210,7 @@ def main():
             print('1')
             # add url to URLS and get 10000 chars of text
             URLS.append(url)
+            print('2')
             # print('1')
             plaintext = get_website(url)
             # print('2')
