@@ -53,7 +53,7 @@ def get_website(url):
     # maybe look into taking off first few chars of text if its unneccessary
     return text
 
-def extract(text, R):
+def extract(text):
     sentences = []
     relations = []
     # Initialize spacy
