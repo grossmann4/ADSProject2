@@ -67,6 +67,7 @@ def extract(text, R, T):
     for sent in doc.sents:
         ents = sp.create_entity_pairs(sent, entities_of_interest)
         print(ents)
+        print('\n')
     # relations = sp.extract_relations(doc, spanbert, entities_of_interest=entities_of_interest, conf=T)
     # print("Relations: {}".format(dict(relations)))
     return 0
