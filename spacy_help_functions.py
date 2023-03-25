@@ -35,9 +35,6 @@ def extract_relations(doc, spanbert, entities_of_interest=None, conf=0.7):
         for ep in entity_pairs:
             examples.append({"tokens": ep[0], "subj": ep[1], "obj": ep[2]})
             examples.append({"tokens": ep[0], "subj": ep[2], "obj": ep[1]})
-        #added
-        if not entity_pairs:
-            continue
         preds = spanbert.predict(examples)
         for ex, pred in list(zip(examples, preds)):
             relation = pred[0]

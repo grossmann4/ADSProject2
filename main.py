@@ -55,19 +55,21 @@ def get_website(url):
     return text
 
 def extract(text, R, T):
+    if R in [1, 2, 4]:
+        entities_of_interest = ["PERSON", "ORGANIZATION"]
+    else:
+        entities_of_interest = ["PERSON", "Location", "CITY", "STATE_OR_PROVINCE", "COUNTRY"]
     # Initialize spacy
     nlp = spacy.load("en_core_web_lg")
     # Split plaintext into sentences and extract relations
     # doc = nlp(text)
     doc = nlp("Bill Gates stepped down as chairman of Microsoft in February 2014 and assumed a new post as technology adviser to support the newly appointed CEO Satya Nadella.")
-    spanbert = span.SpanBERT("./pretrained_spanbert")
-    if R in [1, 2, 4]:
-        entities_of_interest = ["PERSON", "ORGANIZATION"]
-    else:
-        entities_of_interest = ["PERSON", "Location", "CITY", "STATE_OR_PROVINCE", "COUNTRY"]
-    relations = sp.extract_relations(doc, spanbert, entities_of_interest=entities_of_interest, conf=T)
-    print("Relations: {}".format(dict(relations)))
-    return relations
+    for sent in doc.sents:
+        ents = sp.get_entities(sent, entities_of_interest)
+        print(ents)
+    # relations = sp.extract_relations(doc, spanbert, entities_of_interest=entities_of_interest, conf=T)
+    # print("Relations: {}".format(dict(relations)))
+    return 0
 
 def main():
     if len(sys.argv) < 9:
