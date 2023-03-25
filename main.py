@@ -58,7 +58,8 @@ def extract(text, R, T):
     # Initialize spacy
     nlp = spacy.load("en_core_web_lg")
     # Split plaintext into sentences and extract relations
-    doc = nlp(text)
+    # doc = nlp(text)
+    doc = nlp("Bill Gates stepped down as chairman of Microsoft in February 2014 and assumed a new post as technology adviser to support the newly appointed CEO Satya Nadella.")
     spanbert = span.SpanBERT("./pretrained_spanbert")
     if R in [1, 2, 4]:
         entities_of_interest = ["PERSON", "ORGANIZATION"]
