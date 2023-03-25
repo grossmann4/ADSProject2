@@ -71,21 +71,16 @@ def run_spanbert(examples, T, spanbert_model):
         relation = pred[0]
         if relation == 'no_relation':
             continue
-        print("\n\t\t=== Extracted Relation ===")
-        print("\t\tTokens: {}".format(ex['tokens']))
+        # print("\n\t\t=== Extracted Relation ===")
+        # print("\t\tTokens: {}".format(ex['tokens']))
         subj = ex["subj"][0]
         obj = ex["obj"][0]
         confidence = pred[1]
-        print("\t\tRelation: {} (Confidence: {:.3f})\nSubject: {}\tObject: {}".format(relation, confidence, subj, obj))
+        # print("\t\tRelation: {} (Confidence: {:.3f})\nSubject: {}\tObject: {}".format(relation, confidence, subj, obj))
         if confidence > T:
             if res[(subj, relation, obj)] < confidence:
                 res[(subj, relation, obj)] = confidence
-                print("\t\tAdding to set of extracted relations")
-            else:
-                print("\t\tDuplicate with lower confidence than existing record. Ignoring this.")
-        else:
-            print("\t\tConfidence is lower than threshold confidence. Ignoring this.")
-        print("\t\t==========")
+                # print("\t\tAdding to set of extracted relations")
     return res
 
 # TODO
@@ -148,7 +143,7 @@ def extract(text, R, T, OPTION, spanbert_model, nlp):
         # otherwise go to next sentence
         else:
             continue
-        
+
     return res
 
 def main():
@@ -182,6 +177,8 @@ def main():
     X = []
     # Initialize URLS so we can see if a url has already been opened
     URLS = []
+
+    res = defaultdict(int) 
 
     # TODO: make sure this part goes in a loop
     # Query your Google Custom Search Engine to obtain the URLs for the top-10 webpages for query q
@@ -220,8 +217,9 @@ def main():
                 plaintext = plaintext[:10000]
             # split text into sentences and extract entities
             relations = extract(plaintext, R, T, OPTION, spanbert_model, nlp)
+            res.update(relations)
             # print('3')
-            print(relations)
+    print(res)
             
     return 0
 
