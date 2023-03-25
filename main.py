@@ -54,17 +54,19 @@ def get_website(url):
     # maybe look into taking off first few chars of text if its unneccessary
     return text
 
-def extract(text):
-    sentences = []
-    relations = []
+def extract(text, R, T):
     # Initialize spacy
     nlp = spacy.load("en_core_web_lg")
-    # Split plaintext into sentences
+    # Split plaintext into sentences and extract relations
     doc = nlp(text)
-    for sent in doc.sents:
-        # print(sent.ents)
-        print(sp.get_entities(sent, ENTS))
-    return sentences, relations
+    span = spanbert.SpanBERT("./pretrained_spanbert")
+    if R in [1, 2, 4]:
+        entities_of_interest = ["PERSON", "ORGANIZATION"]
+    else:
+        entities_of_interest = ["PERSON", "Location", "CITY", "STATE_OR_PROVINCE", "COUNTRY"]
+    relations = sp.extract_relations(doc, spanbert, entities_of_interest=entities_of_interest, conf=T)
+    print("Relations: {}".format(dict(relations)))
+    return relations
 
 def main():
     if len(sys.argv) < 9:
@@ -121,7 +123,7 @@ def main():
             if len(plaintext) > 10000:
                 plaintext = plaintext[:10000]
             # split text into sentences and extract entities
-            sentences, named_entities = extract(plaintext)
+            relations = extract(plaintext, R, T)
             break
     return 0
 
