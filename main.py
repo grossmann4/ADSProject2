@@ -60,7 +60,7 @@ def extract(text):
     nlp = spacy.load("en_core_web_lg")
     # Split plaintext into sentences
     doc = nlp(text)
-    for sent in doc:
+    for sent in doc.sents:
         print(sent)
         # sentences.append(sent.text)
         # print(sent.text)
