@@ -63,6 +63,7 @@ def extract(text):
     for sent in doc.sents:
         # print(sent)
         sentences.append(sent.text)
+        print('\n')
         print(sent.text)
         # Extract entities
         entity = nlp(sent.text)
