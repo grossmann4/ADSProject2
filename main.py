@@ -59,11 +59,9 @@ def get_website(url):
     # maybe look into taking off first few chars of text if its unneccessary
     return text
 
-def run_spanbert(examples, T):
+def run_spanbert(examples, T, spanbert_model):
     # Initialize return dictionary
     res = defaultdict(int)
-    # Load spanbert model
-    spanbert_model = span.SpanBERT("./pretrained_spanbert")
 
     preds = spanbert_model.predict(examples)
 
@@ -96,6 +94,10 @@ def run_gpt3(sentence):
 
 # extract the relations for a webpage via spanbert
 def extract(text, R, T, OPTION):
+
+    if OPTION == '-spanbert':
+        # Load spanbert model
+        spanbert_model = span.SpanBERT("./pretrained_spanbert")
     res = defaultdict(int)
     # Set entities of interest
     if R in [1, 2, 4]:
@@ -144,7 +146,7 @@ def extract(text, R, T, OPTION):
         # if there are examples, find relations
         if examples:
             if OPTION == '-spanbert':
-                r = run_spanbert(examples, T)
+                r = run_spanbert(examples, T, spanbert_model)
                 res.update(r)
             else:
                 run_gpt3(sent.text)
