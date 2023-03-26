@@ -42,6 +42,7 @@ def get_formatted_items(items):
 
 # scrape the webpage and return the plaintext
 def get_website(url):
+    text = ""
     # try to open the url
     try:
         r = urllib.request.urlopen(url)
@@ -51,11 +52,10 @@ def get_website(url):
     # extract text and clean up newline/spaces
     soup = bs4.BeautifulSoup(html, 'html.parser')
 
-    text = soup.find_all('p').get_text()
+    for para in soup.find_all('p'):
+        t = para.get_text()
+        text += t
     print(text)
-    
-    # for para in soup.find_all('p'):
-    #     print(para.get_text())
     # for script in soup(["script", "style"]):
     #     script.extract()
     # text = soup.body.get_text()
