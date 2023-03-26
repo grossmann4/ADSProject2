@@ -50,9 +50,9 @@ def get_website(url):
         return 0
     # extract text and clean up newline/spaces
     soup = bs4.BeautifulSoup(html, 'html.parser')
-    print(soup.prettify())
     for script in soup(["script", "style"]):
         script.extract()
+    print(soup.prettify())
     text = soup.get_text()
     lines = (line.strip() for line in text.splitlines())
     chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
@@ -190,13 +190,13 @@ def main():
     output = get_formatted_items(items)
     
     # Initialize spacy
-    nlp = spacy.load("en_core_web_lg")
+    # nlp = spacy.load("en_core_web_lg")
 
-    if OPTION == '-spanbert':
-        # Load spanbert model
-        spanbert_model = span.SpanBERT("./pretrained_spanbert")
-    else:
-        spanbert_model = 0
+    # if OPTION == '-spanbert':
+    #     # Load spanbert model
+    #     spanbert_model = span.SpanBERT("./pretrained_spanbert")
+    # else:
+    #     spanbert_model = 0
 
     # Get text from each url
     for doc in output:
