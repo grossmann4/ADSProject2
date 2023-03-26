@@ -60,13 +60,13 @@ def get_website(url):
         print(text)
     else:
         print('BADDDDD')
-    # for script in soup(["script", "style"]):
-    #     script.extract()
-    # text = soup.body.get_text()
-    # lines = (line.strip() for line in text.splitlines())
-    # chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
-    # text = '\n'.join(chunk for chunk in chunks if chunk)
-    # print(text)
+        for script in soup(["script", "style"]):
+            script.extract()
+        web = soup.body.get_text()
+        lines = (line.strip() for line in web.splitlines())
+        chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
+        web = '\n'.join(chunk for chunk in chunks if chunk)
+        print(web)
     # # maybe look into taking off first few chars of text if its unneccessary
     # print(text)
     return text
