@@ -48,6 +48,7 @@ def get_website(url):
         r = urllib.request.urlopen(url)
         html = r.read()
     except urllib.error.HTTPError as e:
+        print('bad')
         return 0
     # extract text and clean up newline/spaces
     soup = bs4.BeautifulSoup(html, 'html.parser')
