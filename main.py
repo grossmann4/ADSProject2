@@ -110,7 +110,7 @@ def extract(text, R, T, OPTION, spanbert_model, nlp):
     for sent in doc.sents:
         # create entity pairs for each sentence
         ents = sp.create_entity_pairs(sent, entities_of_interest)
-        # print("ENTS: {}".format(ents))
+        print("ENTS: {}".format(ents))
 
         # if there are no named entities, go to next sentence
         if not ents:
@@ -135,21 +135,21 @@ def extract(text, R, T, OPTION, spanbert_model, nlp):
                 elif ep[2][1] == 'ORGANIZATION' and ep[1][1] == 'PERSON':
                     examples.append({"tokens": ep[0], "subj": ep[2], "obj": ep[1]})
 
-        # print("EXAMPLES: {}".format(examples))
+        print("EXAMPLES: {}".format(examples))
 
         # if there are examples, find relations
-        if examples:
-            if OPTION == '-spanbert':
-                r = run_spanbert(examples, T, spanbert_model)
-                res.update(r)
-            else:
-                run_gpt3(sent.text)
+        # if examples:
+        #     if OPTION == '-spanbert':
+        #         r = run_spanbert(examples, T, spanbert_model)
+        #         res.update(r)
+        #     else:
+        #         run_gpt3(sent.text)
             
             # print('here')
             # print(examples)
         # otherwise go to next sentence
-        else:
-            continue
+        # else:
+        #     continue
 
     return res
 
@@ -198,11 +198,11 @@ def main():
     # Initialize spacy
     nlp = spacy.load("en_core_web_lg")
 
-    if OPTION == '-spanbert':
-        # Load spanbert model
-        spanbert_model = span.SpanBERT("./pretrained_spanbert")
-    else:
-        spanbert_model = 0
+    # if OPTION == '-spanbert':
+    #     # Load spanbert model
+    #     spanbert_model = span.SpanBERT("./pretrained_spanbert")
+    # else:
+    #     spanbert_model = 0
 
     # Get text from each url
     for doc in output:
@@ -225,7 +225,7 @@ def main():
             # print(plaintext)
             
             # split text into sentences and extract entities
-            relations = extract(plaintext, R, T, OPTION, spanbert_model, nlp)
+            relations = extract(plaintext, R, T, OPTION, 0, nlp)
             res.update(relations)
             break
     #         # print('3')
