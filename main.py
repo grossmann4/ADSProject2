@@ -61,21 +61,30 @@ def get_formatted_items(items):
 
 # scrape the webpage and return the plaintext
 def get_website(url):
+    text = ""
     # try to open the url
     try:
         r = urllib.request.urlopen(url)
         html = r.read()
     except urllib.error.HTTPError as e:
+        print('bad')
         return 0
     # extract text and clean up newline/spaces
     soup = bs4.BeautifulSoup(html, 'html.parser')
-    for script in soup(["script", "style"]):
-        script.extract()
-    text = soup.get_text()
-    lines = (line.strip() for line in text.splitlines())
-    chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
-    text = '\n'.join(chunk for chunk in chunks if chunk)
-    # maybe look into taking off first few chars of text if its unneccessary
+
+    for para in soup.find_all('p'):
+        t = para.get_text()
+        text += t
+
+    if not text:
+        # print(text)
+        # print('BADDDDD')
+        for script in soup(["script", "style"]):
+            script.extract()
+        text = soup.body.get_text()
+        lines = (line.strip() for line in text.splitlines())
+        chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
+        text = '\n'.join(chunk for chunk in chunks if chunk)
     return text
 
 def run_spanbert(examples, T, spanbert_model):
