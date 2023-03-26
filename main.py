@@ -195,7 +195,7 @@ def main():
     # Format items to desired output
     output = get_formatted_items(items)
     
-    Initialize spacy
+    # Initialize spacy
     nlp = spacy.load("en_core_web_lg")
 
     if OPTION == '-spanbert':
