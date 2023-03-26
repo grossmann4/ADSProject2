@@ -56,7 +56,7 @@ def get_website(url):
     lines = (line.strip() for line in text.splitlines())
     chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
     text = '\n'.join(chunk for chunk in chunks if chunk)
-    print(text)
+    # print(text)
     # maybe look into taking off first few chars of text if its unneccessary
     return text
 
@@ -216,7 +216,7 @@ def main():
                 continue
             if len(plaintext) > 10000:
                 plaintext = plaintext[:10000]
-            # print(plaintext)
+            print(plaintext)
             break
             # split text into sentences and extract entities
     #         relations = extract(plaintext, R, T, OPTION, spanbert_model, nlp)
