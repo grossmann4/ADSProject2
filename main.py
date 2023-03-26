@@ -64,6 +64,7 @@ def get_website(url):
     # text = '\n'.join(chunk for chunk in chunks if chunk)
     # # print(text)
     # # maybe look into taking off first few chars of text if its unneccessary
+    print(text)
     return text
 
 def run_spanbert(examples, T, spanbert_model):
@@ -110,7 +111,7 @@ def extract(text, R, T, OPTION, spanbert_model, nlp):
     for sent in doc.sents:
         # create entity pairs for each sentence
         ents = sp.create_entity_pairs(sent, entities_of_interest)
-        print("ENTS: {}".format(ents))
+        # print("ENTS: {}".format(ents))
 
         # if there are no named entities, go to next sentence
         if not ents:
@@ -135,7 +136,7 @@ def extract(text, R, T, OPTION, spanbert_model, nlp):
                 elif ep[2][1] == 'ORGANIZATION' and ep[1][1] == 'PERSON':
                     examples.append({"tokens": ep[0], "subj": ep[2], "obj": ep[1]})
 
-        print("EXAMPLES: {}".format(examples))
+        # print("EXAMPLES: {}".format(examples))
 
         # if there are examples, find relations
         # if examples:
