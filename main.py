@@ -53,10 +53,10 @@ def get_website(url):
     for script in soup(["script", "style"]):
         script.extract()
     text = soup.get_text()
-    print(text.prettify())
     lines = (line.strip() for line in text.splitlines())
     chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
     text = '\n'.join(chunk for chunk in chunks if chunk)
+    print(text)
     # maybe look into taking off first few chars of text if its unneccessary
     return text
 
