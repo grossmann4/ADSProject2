@@ -50,15 +50,18 @@ def get_website(url):
         return 0
     # extract text and clean up newline/spaces
     soup = bs4.BeautifulSoup(html, 'html.parser')
-    for script in soup(["script", "style"]):
-        script.extract()
-    text = soup.body.get_text()
-    lines = (line.strip() for line in text.splitlines())
-    chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
-    text = '\n'.join(chunk for chunk in chunks if chunk)
-    # print(text)
-    # maybe look into taking off first few chars of text if its unneccessary
-    return text
+
+    for para in soup.find_all('p'):
+        print(para.get_text())
+    # for script in soup(["script", "style"]):
+    #     script.extract()
+    # text = soup.body.get_text()
+    # lines = (line.strip() for line in text.splitlines())
+    # chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
+    # text = '\n'.join(chunk for chunk in chunks if chunk)
+    # # print(text)
+    # # maybe look into taking off first few chars of text if its unneccessary
+    return 0
 
 def run_spanbert(examples, T, spanbert_model):
     # Initialize return dictionary
@@ -216,7 +219,7 @@ def main():
                 continue
             if len(plaintext) > 10000:
                 plaintext = plaintext[:10000]
-            print(plaintext)
+            # print(plaintext)
             break
             # split text into sentences and extract entities
     #         relations = extract(plaintext, R, T, OPTION, spanbert_model, nlp)
