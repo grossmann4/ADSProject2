@@ -227,6 +227,7 @@ def main():
             # split text into sentences and extract entities
             relations = extract(plaintext, R, T, OPTION, spanbert_model, nlp)
             res.update(relations)
+            break
     #         # print('3')
     print(res)
             
