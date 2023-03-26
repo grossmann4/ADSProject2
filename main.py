@@ -223,7 +223,7 @@ def main():
             if len(plaintext) > 10000:
                 plaintext = plaintext[:10000]
             # print(plaintext)
-            break
+            
             # split text into sentences and extract entities
             relations = extract(plaintext, R, T, OPTION, spanbert_model, nlp)
             res.update(relations)
