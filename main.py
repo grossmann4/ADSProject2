@@ -51,9 +51,9 @@ def get_website(url):
     # extract text and clean up newline/spaces
     soup = bs4.BeautifulSoup(html, 'html.parser')
 
-    text = soup.find_all('p')
+    text = soup.find_all('p').get_text()
     print(text)
-    print(type(text))
+    
     # for para in soup.find_all('p'):
     #     print(para.get_text())
     # for script in soup(["script", "style"]):
