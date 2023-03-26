@@ -55,7 +55,7 @@ def get_website(url):
     for para in soup.find_all('p'):
         t = para.get_text()
         text += t
-    print(text)
+    # print(text)
     # for script in soup(["script", "style"]):
     #     script.extract()
     # text = soup.body.get_text()
@@ -64,7 +64,7 @@ def get_website(url):
     # text = '\n'.join(chunk for chunk in chunks if chunk)
     # # print(text)
     # # maybe look into taking off first few chars of text if its unneccessary
-    return 0
+    return text
 
 def run_spanbert(examples, T, spanbert_model):
     # Initialize return dictionary
@@ -195,14 +195,14 @@ def main():
     # Format items to desired output
     output = get_formatted_items(items)
     
-    # Initialize spacy
-    # nlp = spacy.load("en_core_web_lg")
+    Initialize spacy
+    nlp = spacy.load("en_core_web_lg")
 
-    # if OPTION == '-spanbert':
-    #     # Load spanbert model
-    #     spanbert_model = span.SpanBERT("./pretrained_spanbert")
-    # else:
-    #     spanbert_model = 0
+    if OPTION == '-spanbert':
+        # Load spanbert model
+        spanbert_model = span.SpanBERT("./pretrained_spanbert")
+    else:
+        spanbert_model = 0
 
     # Get text from each url
     for doc in output:
@@ -225,10 +225,10 @@ def main():
             # print(plaintext)
             break
             # split text into sentences and extract entities
-    #         relations = extract(plaintext, R, T, OPTION, spanbert_model, nlp)
-    #         res.update(relations)
+            relations = extract(plaintext, R, T, OPTION, spanbert_model, nlp)
+            res.update(relations)
     #         # print('3')
-    # print(res)
+    print(res)
             
     return 0
 
