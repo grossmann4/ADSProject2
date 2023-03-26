@@ -53,19 +53,22 @@ def get_website(url):
     # extract text and clean up newline/spaces
     soup = bs4.BeautifulSoup(html, 'html.parser')
 
-    # for para in soup.find_all('p'):
-    #     t = para.get_text()
-    #     text += t
-    # print(text)
-    for script in soup(["script", "style"]):
-        script.extract()
-    text = soup.body.get_text()
-    lines = (line.strip() for line in text.splitlines())
-    chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
-    text = '\n'.join(chunk for chunk in chunks if chunk)
+    for para in soup.find_all('p'):
+        t = para.get_text()
+        text += t
+    if text:
+        print(text)
+    else:
+        print('BADDDDD')
+    # for script in soup(["script", "style"]):
+    #     script.extract()
+    # text = soup.body.get_text()
+    # lines = (line.strip() for line in text.splitlines())
+    # chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
+    # text = '\n'.join(chunk for chunk in chunks if chunk)
     # print(text)
     # # maybe look into taking off first few chars of text if its unneccessary
-    print(text)
+    # print(text)
     return text
 
 def run_spanbert(examples, T, spanbert_model):
