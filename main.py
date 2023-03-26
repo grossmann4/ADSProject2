@@ -50,6 +50,7 @@ def get_website(url):
         return 0
     # extract text and clean up newline/spaces
     soup = bs4.BeautifulSoup(html, 'html.parser')
+    print(soup.prettify())
     for script in soup(["script", "style"]):
         script.extract()
     text = soup.get_text()
@@ -215,11 +216,13 @@ def main():
                 continue
             if len(plaintext) > 10000:
                 plaintext = plaintext[:10000]
+            # print(plaintext)
+            break
             # split text into sentences and extract entities
-            relations = extract(plaintext, R, T, OPTION, spanbert_model, nlp)
-            res.update(relations)
-            # print('3')
-    print(res)
+    #         relations = extract(plaintext, R, T, OPTION, spanbert_model, nlp)
+    #         res.update(relations)
+    #         # print('3')
+    # print(res)
             
     return 0
 
