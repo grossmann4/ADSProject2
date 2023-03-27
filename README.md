@@ -46,14 +46,15 @@
     
 ## Step 3
 * Retrieve corresponding webpage: send a request to the url with `r = urllib.request.urlopen(url)` and read the webpage with `html = r.read()`
-* Extract plaintext: ` # extract text and clean up newline/spaces
-    soup = bs4.BeautifulSoup(html, 'html.parser')
-    for script in soup(["script", "style"]):
-        script.extract()
-    text = soup.get_text()
-    lines = (line.strip() for line in text.splitlines())
-    chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
-    text = '\n'.join(chunk for chunk in chunks if chunk)`
+* Extract plaintext: 
+   '# extract text and clean up newline/spaces'
+   'soup = bs4.BeautifulSoup(html, 'html.parser')'
+   'for script in soup(["script", "style"]):'
+        'script.extract()'
+    'text = soup.get_text()'
+    'lines = (line.strip() for line in text.splitlines())'
+    'chunks = (phrase.strip() for line in lines for phrase in line.split("  "))'
+    'text = '\n'.join(chunk for chunk in chunks if chunk)`
 
 ## Keys
 * Search Engine: fb8c9f64780d3213f
