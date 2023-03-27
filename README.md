@@ -47,12 +47,19 @@
 ## Step 3
 * Retrieve corresponding webpage: send a request to the url with `r = urllib.request.urlopen(url)` and read the webpage with `html = r.read()`
 * Extract plaintext: 
+
       * parse the webpage with `soup = bs4.BeautifulSoup(html, 'html.parser')`
+
       * rip out script and style html tags with `for script in soup(["script", "style"]): script.extract()`
+
       * get the text between html tags with `text = soup.get_text()`
+
       * format the text with `lines = (line.strip() for line in text.splitlines())` then `chunks = (phrase.strip() for line in lines for phrase in line.split("  "))` and finally `text = '\n'.join(chunk for chunk in chunks if chunk)`
+
 * Truncate text: `plaintext = plaintext[:10000]`
+
 * Use Spacy to split into sentences and extract named entities:
+
       * initialize spacy with `nlp = spacy.load("en_core_web_lg")`
       * load spanbert model with `spanbert_model = span.SpanBERT("./pretrained_spanbert")`
       * use spacy to split sentences and extract named entities with `doc = nlp(text)`
