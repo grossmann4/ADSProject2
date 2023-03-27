@@ -361,8 +361,7 @@ def main():
                 res.update(relations)
 
         # if res has at least K tuples, stop and return
-        sorted_res = dict(sorted(res.items(), key=lambda x:x[1]))
-        sorted_res.reverse()
+        sorted_res = dict(reversed(sorted(res.items(), key=lambda x:x[1])))
         if len(res.items()) >= K or len(res.items()) == 0:
             break
         
