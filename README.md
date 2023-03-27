@@ -19,7 +19,7 @@
 * Follow all installation steps in the Description at http://www.cs.columbia.edu/~gravano/cs6111/Proj2/ 
 * pip3 install -r requirements.txt
 * bash download_finetuned.sh
-* python3 main.py [-spanbert|-gpt3] <google api key> <google engine id> <openai secret key> <r> <t> <q> <k>
+* `python3 main.py [-spanbert|-gpt3] <google api key> <google engine id> <openai secret key> <r> <t> <q> <k>`
 
 ## Internal Design
 * Libraries:
@@ -45,7 +45,15 @@
     * def main(): main program logic
     
 ## Step 3
-* 
+* Retrieve corresponding webpage: send a request to the url with `r = urllib.request.urlopen(url)` and read the webpage with `html = r.read()`
+* Extract plaintext: ` # extract text and clean up newline/spaces
+    soup = bs4.BeautifulSoup(html, 'html.parser')
+    for script in soup(["script", "style"]):
+        script.extract()
+    text = soup.get_text()
+    lines = (line.strip() for line in text.splitlines())
+    chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
+    text = '\n'.join(chunk for chunk in chunks if chunk)`
 
 ## Keys
 * Search Engine: fb8c9f64780d3213f
