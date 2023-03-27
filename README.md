@@ -47,15 +47,25 @@
 ## Step 3
 * Retrieve corresponding webpage: send a request to the url with `r = urllib.request.urlopen(url)` and read the webpage with `html = r.read()`
 * Extract plaintext: 
-   '# extract text and clean up newline/spaces'
-   'soup = bs4.BeautifulSoup(html, 'html.parser')'
-   'for script in soup(["script", "style"]):'
-        'script.extract()'
-    'text = soup.get_text()'
-    'lines = (line.strip() for line in text.splitlines())'
-    'chunks = (phrase.strip() for line in lines for phrase in line.split("  "))'
-    'text = '\n'.join(chunk for chunk in chunks if chunk)`
-
+      * parse the webpage with `soup = bs4.BeautifulSoup(html, 'html.parser')`
+      * rip out script and style html tags with `for script in soup(["script", "style"]): script.extract()`
+      * get the text between html tags with `text = soup.get_text()`
+      * format the text with `lines = (line.strip() for line in text.splitlines())` then `chunks = (phrase.strip() for line in lines for phrase in line.split("  "))` and finally `text = '\n'.join(chunk for chunk in chunks if chunk)`
+* Truncate text: `plaintext = plaintext[:10000]`
+* Use Spacy to split into sentences and extract named entities:
+      * initialize spacy with `nlp = spacy.load("en_core_web_lg")`
+      * load spanbert model with `spanbert_model = span.SpanBERT("./pretrained_spanbert")`
+      * use spacy to split sentences and extract named entities with `doc = nlp(text)`
+      * get named entity pairs with `ents = sp.create_entity_pairs(sent, entities_of_interest)` for each sentence in doc
+* Extracting Relations:
+      * for every name entity pair found, make sure that the entities are correct for the user-specified relation (lines 211-226 in main.py)
+      * if a sentence contains a correct name entity pair for the specified relation, either run spanbert on the pair if -spanbert is specified or run gpt3 on the sentence if -gpt3 is specified (lines 231-239 in main.py)
+            * for spanbert, run the pair through the spanbert model: `preds = spanbert_model.predict(examples)`
+            * for gpt3, construct the query and send it to gpt3 (lines 124-147 in main.py) 
+* Adding tuples to X:
+      * for spanbert, find the correct relations and only add the ones with confidence greater than user specified t (lines 87-107 in main.py)
+      * for gpt3, add all tuples to X (lines 147-173)
+      
 ## Keys
 * Search Engine: fb8c9f64780d3213f
 * API Key: API Key: AIzaSyBh546gYpsBnKcTEdBi-jagSb9gEIoRj6s
