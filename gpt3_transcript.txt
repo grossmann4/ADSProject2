@@ -1,4 +1,4 @@
-python3 main.py -gpt3 AIzaSyBh546gYpsBnKcTEdBi-jagSb9gEIoRj6s fb8c9f64780d3213f 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 2 1 "bill gates microsoft" 2
+python3 main.py -gpt3 AIzaSyBh546gYpsBnKcTEdBi-jagSb9gEIoRj6s fb8c9f64780d3213f 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 2 0.0 "bill gates microsoft" 2
 
             Parameters:
             Client key      = AIzaSyBh546gYpsBnKcTEdBi-jagSb9gEIoRj6s
@@ -449,7 +449,7 @@ URL ( 10 / 10): {'title': 'Bio | Bill Gates', 'url': 'https://www.gatesnotes.com
 Fetching text from url ...
 Website could not be opened, moving on to next one.
 
-================== ALL RELATIONS for per:cities_of_residence ( 10 ) =================
+================== ALL RELATIONS for per:employee_of ( 35 ) =================
 Confidence: 1.0            | Subject: Bill Gates              | Object: Microsoft
 Confidence: 1.0            | Subject: Bill Gates              | Object: Berkshire Hathaway
 Confidence: 1.0            | Subject: Bill Gates              | Object: Branded Entertainment Network
