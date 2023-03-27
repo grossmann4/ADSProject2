@@ -95,7 +95,7 @@ def run_spanbert(examples, T, spanbert_model, R):
         subj = ex["subj"][0]
         obj = ex["obj"][0]
         confidence = pred[1]
-        print("\t\tOutput Confidence: {:.6f})S ; Subject: {} ; Object: {}".format(confidence, subj, obj))
+        print("\t\tOutput Confidence: {:.6f} ; Subject: {} ; Object: {}".format(confidence, subj, obj))
         if confidence > T:
             if res[(subj, relation, obj)] < confidence:
                 res[(subj, relation, obj)] = confidence
@@ -373,7 +373,7 @@ def main():
 
     print('================== ALL RELATIONS for per:cities_of_residence ( 10 ) =================')
 
-    for tup, confidence in res.items():
+    for tup, confidence in sorted_res.items():
         print('Confidence: {}            | Subject: {}              | Object: {}'.format(confidence, tup[0], tup[2]))
     print('Total # of iterations = {}'.format(iteration))
     return 0
