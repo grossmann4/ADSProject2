@@ -61,16 +61,27 @@
 * Use Spacy to split into sentences and extract named entities:
 
       * initialize spacy with `nlp = spacy.load("en_core_web_lg")`
+
       * load spanbert model with `spanbert_model = span.SpanBERT("./pretrained_spanbert")`
+
       * use spacy to split sentences and extract named entities with `doc = nlp(text)`
+
       * get named entity pairs with `ents = sp.create_entity_pairs(sent, entities_of_interest)` for each sentence in doc
+
 * Extracting Relations:
+
       * for every name entity pair found, make sure that the entities are correct for the user-specified relation (lines 211-226 in main.py)
+
       * if a sentence contains a correct name entity pair for the specified relation, either run spanbert on the pair if -spanbert is specified or run gpt3 on the sentence if -gpt3 is specified (lines 231-239 in main.py)
+
             * for spanbert, run the pair through the spanbert model: `preds = spanbert_model.predict(examples)`
+
             * for gpt3, construct the query and send it to gpt3 (lines 124-147 in main.py) 
+
 * Adding tuples to X:
+
       * for spanbert, find the correct relations and only add the ones with confidence greater than user specified t (lines 87-107 in main.py)
+
       * for gpt3, add all tuples to X (lines 147-173)
       
 ## Keys
