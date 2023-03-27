@@ -371,7 +371,7 @@ def main():
         Q = ' '.join(top_tup)
 
 
-    print('================== ALL RELATIONS for {} ( 10 ) ================='.format(RELATION_TEXT_MAPPING[R_INT_MAPPING[R]]))
+    print('================== ALL RELATIONS for {} ( {} ) ================='.format(RELATION_TEXT_MAPPING[R_INT_MAPPING[R]], len(sorted_res)))
 
     for tup, confidence in sorted_res.items():
         print('Confidence: {}            | Subject: {}              | Object: {}'.format(confidence, tup[0], tup[2]))
