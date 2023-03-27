@@ -361,7 +361,7 @@ def main():
                 res.update(relations)
 
         # if res has at least K tuples, stop and return
-        sorted_res = sorted(res.items(), key=lambda x:x[1])
+        sorted_res = dict(sorted(res.items(), key=lambda x:x[1]))
         if len(res.items()) >= K or len(res.items()) == 0:
             break
         
@@ -371,7 +371,7 @@ def main():
         Q = ' '.join(top_tup)
 
 
-    print('================== ALL RELATIONS for per:cities_of_residence ( 10 ) =================')
+    print('================== ALL RELATIONS for {}} ( 10 ) ================='.format(RELATION_TEXT_MAPPING[R_INT_MAPPING[R]]))
 
     for tup, confidence in sorted_res.items():
         print('Confidence: {}            | Subject: {}              | Object: {}'.format(confidence, tup[0], tup[2]))
